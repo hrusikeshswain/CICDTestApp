@@ -1,20 +1,20 @@
 name: React Native CI
 
 on:
-  push: 
-    branches:[main]
+  push:
+    branches: [main]
   pull_request:
-    branches:[main]
+    branches: [main]
 
-jobs: 
-   build:
-     run-on: macos-latest
+jobs:
+  build:
+    runs-on: macos-latest
 
-     steps: 
-       - name: Checkout repo
-       - uses: actions/checkout@v3
-       
-    - name: 🟡 Set up Node.js
+    steps:
+      - name: 🧾 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🟡 Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -37,4 +37,4 @@ jobs:
       - name: 🧪 Run Android Build
         run: |
           cd android
-          ./gradlew assembleDebug   
+          ./gradlew assembleDebug
