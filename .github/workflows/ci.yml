@@ -1,0 +1,40 @@
+name: React Native CI
+
+on:
+  push: 
+    branches:[main]
+  pull_request:
+    branches:[main]
+
+jobs: 
+   build:
+     run-on: macos-latest
+
+     steps: 
+       - name: Checkout repo
+       - uses: actions/checkout@v3
+       
+    - name: 🟡 Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 📦 Install dependencies
+        run: npm install
+
+      - name: 🔧 Install CocoaPods (iOS dependencies)
+        run: |
+          cd ios
+          pod install
+
+      - name: 🧪 Run iOS Build
+        run: |
+          cd ios
+          xcodebuild -workspace CICDTestApp.xcworkspace -scheme CICDTestApp -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14' build | xcpretty
+        env:
+          RCT_NO_LAUNCH_PACKAGER: true
+
+      - name: 🧪 Run Android Build
+        run: |
+          cd android
+          ./gradlew assembleDebug   
