@@ -30,22 +30,22 @@ jobs:
           cd android
           ./gradlew assembleRelease
 
-      - name: 🍏 Build iOS IPA
-        run: |
-          cd ios
-          xcodebuild \
-            -workspace CICDTestApp.xcworkspace \
-            -scheme CICDTestApp \
-            -sdk iphoneos \
-            -configuration Release \
-            -archivePath $PWD/build/CICDTestApp.xcarchive \
-            archive
+      # - name: 🍏 Build iOS IPA
+      #   run: |
+      #     cd ios
+      #     xcodebuild \
+      #       -workspace CICDTestApp.xcworkspace \
+      #       -scheme CICDTestApp \
+      #       -sdk iphoneos \
+      #       -configuration Release \
+      #       -archivePath $PWD/build/CICDTestApp.xcarchive \
+      #       archive
 
-          xcodebuild \
-            -exportArchive \
-            -archivePath $PWD/build/CICDTestApp.xcarchive \
-            -exportOptionsPlist exportOptions.plist \
-            -exportPath $PWD/build
+      #     xcodebuild \
+      #       -exportArchive \
+      #       -archivePath $PWD/build/CICDTestApp.xcarchive \
+      #       -exportOptionsPlist exportOptions.plist \
+      #       -exportPath $PWD/build
 
       - name: 📤 Upload Android APK to Firebase
         run: |
@@ -56,11 +56,11 @@ jobs:
             --release-notes "Automated build from GitHub Actions" \
             --groups testers
 
-      - name: 📤 Upload iOS IPA to Firebase
-        run: |
-          npm install -g firebase-tools
-          firebase appdistribution:distribute ios/build/CICDTestApp.ipa \
-            --app ${{ secrets.IOS_APP_ID }} \
-            --token "${{ secrets.FIREBASE_TOKEN }}" \
-            --release-notes "Automated build from GitHub Actions" \
-            --groups testers
+      # - name: 📤 Upload iOS IPA to Firebase
+      #   run: |
+      #     npm install -g firebase-tools
+      #     firebase appdistribution:distribute ios/build/CICDTestApp.ipa \
+      #       --app ${{ secrets.IOS_APP_ID }} \
+      #       --token "${{ secrets.FIREBASE_TOKEN }}" \
+      #       --release-notes "Automated build from GitHub Actions" \
+      #       --groups testers
